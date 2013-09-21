@@ -33,7 +33,7 @@ sub get_media_info {
 }
 
 1;
-# ABSTRACT: Common interface for Media::Info::*
+# ABSTRACT: Return information on media (music, video, etc) file/URL
 
 =head1 SYNOPSIS
 
