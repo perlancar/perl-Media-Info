@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use Perinci::CmdLine;
+
+# VERSION
+
+Perinci::CmdLine->new(url=>'/Media/Info/get_media_info')->run;
+
+1;
+# ABSTRACT: Return information about a media file/URL
+# PODNAME: media-file
+
+=head1 SYNOPSIS
+
+ % media-file /home/steven/celine.mp4
+
+
+=head1 DESCRIPTION
+
+This is a command-line interface for the C<get_media_info> function in
+L<Media::Info>.
+
+=cut
