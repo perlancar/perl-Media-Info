@@ -1,5 +1,10 @@
 Revision history for Media-Info
 
+0.04    2014-01-21 (SHARYANTO)
+
+        - bin/media-info: Allow multiple arguments.
+
+
 0.03    2013-10-31 (SHARYANTO)
 
         - No functional changes. Add sample result in Synopsis.
