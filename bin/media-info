@@ -50,11 +50,11 @@ Perinci::CmdLine->new(url=>'/main/media_info')->run;
 
 1;
 # ABSTRACT: Return information about media files/URLs
-# PODNAME: media-file
+# PODNAME: media-info
 
 =head1 SYNOPSIS
 
- % media-file /home/steven/celine.mp4
+ % media-info /home/steven/celine.mp4
 
 
 =head1 DESCRIPTION
