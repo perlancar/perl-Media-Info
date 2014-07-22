@@ -5,7 +5,7 @@ use strict;
 use warnings;
 #use Log::Any '$log';
 
-use Perinci::CmdLine;
+use Perinci::CmdLine::Any;
 use Media::Info qw(get_media_info);
 
 # VERSION
@@ -46,7 +46,7 @@ sub media_info {
     }
 }
 
-Perinci::CmdLine->new(url=>'/main/media_info')->run;
+Perinci::CmdLine::Any->new(url=>'/main/media_info')->run;
 
 1;
 # ABSTRACT: Return information about media files/URLs
