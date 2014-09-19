@@ -54,7 +54,7 @@ Perinci::CmdLine::Any->new(url=>'/main/media_info')->run;
 
 =head1 SYNOPSIS
 
- % media-info /home/steven/celine.mp4
+ % media-info /home/jajang/soimah.mp4
 
 
 =head1 DESCRIPTION
