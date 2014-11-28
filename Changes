@@ -1,5 +1,12 @@
 Revision history for Media-Info
 
+0.07     2014-11-28 (SHARYANTO)
+
+         - No functional changes.
+
+         - Prefer Perinci::CmdLine::Lite in CLI script.
+
+
 0.06     2014-07-22 (SHARYANTO)
 
          - No functional changes.
