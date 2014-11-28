@@ -1,14 +1,12 @@
-#!perl
+package App::Media::Info;
+
+# DATE
+# VERSION
 
 use 5.010;
 use strict;
 use warnings;
 #use Log::Any '$log';
-
-use Perinci::CmdLine::Any;
-use Media::Info qw(get_media_info);
-
-# VERSION
 
 our %SPEC;
 
@@ -22,20 +20,23 @@ $SPEC{media_info} = {
             req => 1,
             pos => 0,
             greedy => 1,
+            'x.schema.entity' => 'file_or_url',
         },
     },
 };
 sub media_info {
+    require Media::Info;
+
     my %args = @_;
 
     my $media = $args{media};
 
     if (@$media == 1) {
-        return get_media_info(media => $media->[0]);
+        return Media::Info::get_media_info(media => $media->[0]);
     } else {
         my @res;
         for (@$media) {
-            my $res = get_media_info(media => $_);
+            my $res = Media::Info::get_media_info(media => $_);
             unless ($res->[0] == 200) {
                 warn "Can't get media info for '$_': $res->[1] ($res->[0])\n";
                 next;
@@ -46,20 +47,5 @@ sub media_info {
     }
 }
 
-Perinci::CmdLine::Any->new(url=>'/main/media_info')->run;
-
 1;
-# ABSTRACT: Return information about media files/URLs
-# PODNAME: media-info
-
-=head1 SYNOPSIS
-
- % media-info /home/jajang/soimah.mp4
-
-
-=head1 DESCRIPTION
-
-This is a command-line interface for the C<get_media_info> function in
-L<Media::Info>.
-
-=cut
+# ABSTRACT: Backend for script media-info
