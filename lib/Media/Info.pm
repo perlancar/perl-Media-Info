@@ -1,5 +1,8 @@
 package Media::Info;
 
+# DATE
+# VERSION
+
 use 5.010001;
 use strict;
 use warnings;
@@ -9,8 +12,6 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
                        get_media_info
                );
-
-# VERSION
 
 our %SPEC;
 
@@ -33,7 +34,7 @@ sub get_media_info {
 }
 
 1;
-# ABSTRACT: Return information on media (music, video, etc) file/URL
+# ABSTRACT:
 
 =head1 SYNOPSIS
 

@@ -48,4 +48,4 @@ sub media_info {
 }
 
 1;
-# ABSTRACT: Backend for script media-info
+# ABSTRACT:
