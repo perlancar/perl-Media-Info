@@ -20,7 +20,8 @@ $SPEC{media_info} = {
             req => 1,
             pos => 0,
             greedy => 1,
-            'x.schema.entity' => 'file_or_url',
+            #'x.schema.entity' => 'filename_or_url',
+            'x.schema.entity' => 'filename', # temp
         },
     },
 };
