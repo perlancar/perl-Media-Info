@@ -1,5 +1,13 @@
 Revision history for Media-Info
 
+0.10    2016-04-06 (PERLANCAR)
+
+        - Split CLI to App-MediaInfo to reduce dependencies for Media-Info.
+
+        - get_media_info(): Add information about the backend used in result
+          metadata (func.backend).
+
+
 0.09    2016-04-06 (PERLANCAR)
 
 	- Try multiple backend, now that we also have another backend
