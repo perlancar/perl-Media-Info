@@ -1,5 +1,11 @@
 Revision history for Media-Info
 
+0.09    2016-04-06 (PERLANCAR)
+
+	- Try multiple backend, now that we also have another backend
+	  (Media::Info::Ffmpeg).
+
+
 0.08    2015-09-03 (PERLANCAR)
 
 	- No functional changes.
