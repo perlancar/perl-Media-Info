@@ -23,6 +23,10 @@ $SPEC{media_info} = {
             #'x.schema.entity' => 'filename_or_url',
             'x.schema.entity' => 'filename', # temp
         },
+        backend => {
+            summary => 'Choose a specific backend',
+            schema  => ['str*', in => [qw/Mplayer Ffmpeg/]],
+        },
     },
 };
 sub media_info {
@@ -33,11 +37,17 @@ sub media_info {
     my $media = $args{media};
 
     if (@$media == 1) {
-        return Media::Info::get_media_info(media => $media->[0]);
+        return Media::Info::get_media_info(
+            media => $media->[0],
+            (backend => $args{backend}) x !!(defined $args{backend}),
+        );
     } else {
         my @res;
         for (@$media) {
-            my $res = Media::Info::get_media_info(media => $_);
+            my $res = Media::Info::get_media_info(
+                media => $_,
+                (backend => $args{backend}) x !!(defined $args{backend}),
+            );
             unless ($res->[0] == 200) {
                 warn "Can't get media info for '$_': $res->[1] ($res->[0])\n";
                 next;

@@ -25,12 +25,45 @@ $SPEC{get_media_info} = {
             pos     => 0,
             req     => 1,
         },
+        backend => {
+            summary => "Choose specific backend",
+            schema  => ['str*', match => '\A\w+\z'],
+        },
     },
 };
 sub get_media_info {
-    require Media::Info::Mplayer;
+    no strict 'refs';
 
-    Media::Info::Mplayer::get_media_info(@_);
+    my %args = @_;
+
+    my @backends;
+    if ($args{backend}) {
+        @backends = ($args{backend});
+    } else {
+        @backends = qw(Ffmpeg Mplayer);
+    }
+
+    # try the first backend that succeeds
+    for my $backend (@backends) {
+        my $mod;
+        my $mod_pm;
+        if ($backend =~ /\A\w+\z/) {
+            $mod    = "Media::Info::$backend";
+            $mod_pm = "Media/Info/$backend.pm";
+        } else {
+            return [400, "Invalid backend '$backend'"];
+        }
+        next unless eval { require $mod_pm; 1 };
+        my $func = \&{"$mod\::get_media_info"};
+        my $res = $func->(media => $args{media});
+        return $res unless $res->[0] == 412;
+    }
+
+    if ($args{backend}) {
+        return [412, "Backend '$args{backend}' not available, please install it first"];
+    } else {
+        return [412, "No Media::Info::* backends available, please install one"];
+    }
 }
 
 1;
@@ -64,8 +97,8 @@ Sample result:
 
 This module provides a common interface for Media::Info::* modules, which you
 can use to get information about a media file (like video, music, etc) using
-specific backends. Currently the only backend available is
-L<Media::Info::Mplayer>, so this module uses that.
+specific backends. Currently the available backends include
+L<Media::Info::Mplayer> and L<Media::Info::Ffmpeg>.
 
 
 =head1 SEE ALSO
