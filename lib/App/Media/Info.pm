@@ -26,6 +26,14 @@ $SPEC{media_info} = {
         backend => {
             summary => 'Choose a specific backend',
             schema  => ['str*', match => '\A\w+\z'],
+            completion => sub {
+                require Complete::Module;
+                my %args = @_;
+                Complete::Module::complete_module(
+                    word => $args{word},
+                    ns_prefix => "Media::Info",
+                );
+            },
         },
     },
 };
