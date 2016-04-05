@@ -56,6 +56,9 @@ sub get_media_info {
         next unless eval { require $mod_pm; 1 };
         my $func = \&{"$mod\::get_media_info"};
         my $res = $func->(media => $args{media});
+        if ($res->[0] == 200) {
+            $res->[3]{'func.backend'} = $backend;
+        }
         return $res unless $res->[0] == 412;
     }
 
