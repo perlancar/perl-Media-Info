@@ -25,7 +25,7 @@ $SPEC{media_info} = {
         },
         backend => {
             summary => 'Choose a specific backend',
-            schema  => ['str*', in => [qw/Mplayer Ffmpeg/]],
+            schema  => ['str*', match => '\A\w+\z'],
         },
     },
 };
