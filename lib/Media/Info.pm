@@ -21,6 +21,12 @@ $SPEC{get_media_info} = {
     args => {
         media => {
             summary => 'Media file/URL',
+            description => <<'_',
+
+Note that not every backend can retrieve URL. At the time of this writing, only
+the Mplayer backend can.
+
+_
             schema  => 'str*',
             pos     => 0,
             req     => 1,
