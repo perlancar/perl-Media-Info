@@ -1,5 +1,12 @@
 Revision history for Media-Info
 
+0.11    2016-06-02 (PERLANCAR)
+
+	- [ux] Add completion for --backend.
+
+	- Add note about only Mplayer supports URL.
+
+
 0.10    2016-04-06 (PERLANCAR)
 
         - Split CLI to App-MediaInfo to reduce dependencies for Media-Info.
