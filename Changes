@@ -1,5 +1,12 @@
 Revision history for Media-Info
 
+0.12    2016-11-28 (PERLANCAR)
+
+	- No functional changes.
+
+	- Add Media::Info::Mediainfo to list of known backends.
+
+
 0.11    2016-06-02 (PERLANCAR)
 
 	- [ux] Add completion for --backend.
