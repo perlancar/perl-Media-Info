@@ -55,7 +55,7 @@ sub get_media_info {
     if ($args{backend}) {
         @backends = ($args{backend});
     } else {
-        @backends = qw(Ffmpeg Mplayer);
+        @backends = qw(Ffmpeg Mplayer Mediainfo);
     }
 
     # try the first backend that succeeds
@@ -116,7 +116,7 @@ Sample result:
 This module provides a common interface for Media::Info::* modules, which you
 can use to get information about a media file (like video, music, etc) using
 specific backends. Currently the available backends include
-L<Media::Info::Mplayer> and L<Media::Info::Ffmpeg>.
+L<Media::Info::Mplayer>, L<Media::Info::Ffmpeg>, L<Media::Info::Mediainfo>.
 
 
 =head1 SEE ALSO
