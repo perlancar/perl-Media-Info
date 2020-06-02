@@ -99,16 +99,16 @@ sub get_media_info {
             $res->[2]{backend} = $backend;
             $res->[2]{type_from_name} = _type_from_name($_);
 
-            # video_longest_side, video_shortest_side, orientation (if not set by backend)
+            # video_longest_side, video_shortest_side, video_orientation (if not set by backend)
             if ($res->[2]{video_height} && $res->[2]{video_width}) {
                 if ($res->[2]{video_height} > $res->[2]{video_width}) {
                     $res->[2]{video_longest_side}  = $res->[2]{video_height};
                     $res->[2]{video_shortest_side} = $res->[2]{video_width};
-                    $res->[2]{orientation} = 'portrait' unless $res->[2]{orientation};
+                    $res->[2]{video_orientation} = 'portrait' unless $res->[2]{video_orientation};
                 } else {
                     $res->[2]{video_longest_side}  = $res->[2]{video_width};
                     $res->[2]{video_shortest_side} = $res->[2]{video_height};
-                    $res->[2]{orientation} = 'landscape' unless $res->[2]{orientation};
+                    $res->[2]{video_orientation} = 'landscape' unless $res->[2]{video_orientation};
                 }
             }
         }
