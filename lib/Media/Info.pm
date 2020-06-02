@@ -1,6 +1,8 @@
 package Media::Info;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -15,6 +17,17 @@ our @EXPORT_OK = qw(
 
 our %SPEC;
 
+sub _type_from_name {
+    require Filename::Audio;
+    require Filename::Video;
+    require Filename::Image;
+    my $name = shift;
+
+    Filename::Video::check_video_filename(filename => $name) ? "video" :
+    Filename::Audio::check_audio_filename(filename => $name) ? "audio" :
+    Filename::Image::check_image_filename(filename => $name) ? "image" : "unknown";
+}
+
 $SPEC{get_media_info} = {
     v => 1.1,
     summary => 'Return information on media file/URL',
@@ -25,6 +38,13 @@ $SPEC{get_media_info} = {
 
 Note that not every backend can retrieve URL. At the time of this writing, only
 the Mplayer backend can.
+
+Many fields will depend on the backend used. Common fields returned include:
+
+* `backend`: the `Media::Info::*` backend module used, e.g. `Ffmpeg`.
+* `type_from_name`: either `image`, `audio`, `video`, or `unknown`. This
+  is determined from filename (extension).
+
 
 _
             schema  => 'str*',
@@ -72,7 +92,25 @@ sub get_media_info {
         my $func = \&{"$mod\::get_media_info"};
         my $res = $func->(media => $args{media});
         if ($res->[0] == 200) {
+            # add some common fields
+
+            # backend
             $res->[3]{'func.backend'} = $backend;
+            $res->[2]{backend} = $backend;
+            $res->[2]{type_from_name} = _type_from_name($_);
+
+            # video_longest_side, video_shortest_side, orientation (if not set by backend)
+            if ($res->[2]{video_height} && $res->[2]{video_width}) {
+                if ($res->[2]{video_height} > $res->[2]{video_width}) {
+                    $res->[2]{video_longest_side}  = $res->[2]{video_height};
+                    $res->[2]{video_shortest_side} = $res->[2]{video_width};
+                    $res->[2]{orientation} = 'portrait' unless $res->[2]{orientation};
+                } else {
+                    $res->[2]{video_longest_side}  = $res->[2]{video_width};
+                    $res->[2]{video_shortest_side} = $res->[2]{video_height};
+                    $res->[2]{orientation} = 'landscape' unless $res->[2]{orientation};
+                }
+            }
         }
         return $res unless $res->[0] == 412;
     }
@@ -121,7 +159,7 @@ L<Media::Info::Mplayer>, L<Media::Info::Ffmpeg>, L<Media::Info::Mediainfo>.
 
 =head1 SEE ALSO
 
-L<Video::Info> - This module is first written because I couldn't install
+L<Video::Info> - C<Media::Info> is first written because I couldn't install
 Video::Info. That module doesn't seem maintained (last release is in 2003 at the
 time of this writing), plus I want a per-backend namespace organization instead
 of per-format one, and a simple functional interface instead of OO interface.
