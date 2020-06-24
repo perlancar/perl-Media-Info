@@ -104,11 +104,17 @@ sub get_media_info {
                 if ($res->[2]{video_height} > $res->[2]{video_width}) {
                     $res->[2]{video_longest_side}  = $res->[2]{video_height};
                     $res->[2]{video_shortest_side} = $res->[2]{video_width};
-                    $res->[2]{video_orientation} = 'portrait' unless $res->[2]{video_orientation};
+                    unless ($res->[2]{video_orientation}) {
+                        my $rotate = $res->[2]{rotate} // '';
+                        $res->[2]{video_orientation} = $rotate eq '90' || $rotate eq '270' ? 'landscape' : 'portrait';
+                    }
                 } else {
                     $res->[2]{video_longest_side}  = $res->[2]{video_width};
                     $res->[2]{video_shortest_side} = $res->[2]{video_height};
-                    $res->[2]{video_orientation} = 'landscape' unless $res->[2]{video_orientation};
+                    unless ($res->[2]{video_orientation}) {
+                        my $rotate = $res->[2]{rotate} // '';
+                        $res->[2]{video_orientation} = $rotate eq '90' || $rotate eq '270' ? 'portrait' : 'landscape';
+                    }
                 }
             }
         }
