@@ -99,6 +99,12 @@ sub get_media_info {
             $res->[2]{backend} = $backend;
             $res->[2]{type_from_name} = _type_from_name($args{media});
 
+            # mtime, ctime, filesize
+            my @st = stat $args{media};
+            $res->[2]{mtime} = $st[9];
+            $res->[2]{ctime} = $st[10];
+            $res->[2]{filesize} = $st[7];
+
             # video_longest_side, video_shortest_side, video_orientation (if not set by backend)
             if ($res->[2]{video_height} && $res->[2]{video_width}) {
                 if ($res->[2]{video_height} > $res->[2]{video_width}) {
