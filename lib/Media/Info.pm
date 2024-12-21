@@ -1,16 +1,16 @@
 package Media::Info;
 
+use 5.010001;
+use strict;
+use warnings;
+
+use Exporter 'import';
+
 # AUTHORITY
 # DATE
 # DIST
 # VERSION
 
-use 5.010001;
-use strict;
-use warnings;
-
-require Exporter;
-our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
                        get_media_info
                );
@@ -18,14 +18,14 @@ our @EXPORT_OK = qw(
 our %SPEC;
 
 sub _type_from_name {
-    require Filename::Audio;
-    require Filename::Video;
-    require Filename::Image;
+    require Filename::Type::Audio;
+    require Filename::Type::Video;
+    require Filename::Type::Image;
     my $name = shift;
 
-    Filename::Video::check_video_filename(filename => $name) ? "video" :
-    Filename::Audio::check_audio_filename(filename => $name) ? "audio" :
-    Filename::Image::check_image_filename(filename => $name) ? "image" : "unknown";
+    Filename::Type::Video::check_video_filename(filename => $name) ? "video" :
+    Filename::Type::Audio::check_audio_filename(filename => $name) ? "audio" :
+    Filename::Type::Image::check_image_filename(filename => $name) ? "image" : "unknown";
 }
 
 $SPEC{get_media_info} = {
@@ -34,7 +34,7 @@ $SPEC{get_media_info} = {
     args => {
         media => {
             summary => 'Media file/URL',
-            description => <<'_',
+            description => <<'MARKDOWN',
 
 Note that not every backend can retrieve URL. At the time of this writing, only
 the Mplayer backend can.
@@ -45,8 +45,7 @@ Many fields will depend on the backend used. Common fields returned include:
 * `type_from_name`: either `image`, `audio`, `video`, or `unknown`. This
   is determined from filename (extension).
 
-
-_
+MARKDOWN
             schema  => 'str*',
             pos     => 0,
             req     => 1,
